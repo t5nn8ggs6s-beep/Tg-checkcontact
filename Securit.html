@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка...</title>
+    <style>
+        /* 1. Основные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        /* 2. Контейнер загрузки */
+        .loader-container {
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .loader-text {
+            color: white;
+            font-size: 24px;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* 3. Красивая анимация спиннера */
+        .loader-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        /* 4. Дополнительные круги для красоты */
+        .loader-circles {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .circle {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            animation: bounce 0.5s alternate infinite;
+        }
+        
+        .circle:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .circle:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        /* 5. Основной контент (скрыт сначала) */
+        .main-content {
+            display: none;
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transform: scale(0.9);
+            animation: appear 0.5s forwards;
+        }
+        
+        .main-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .main-content p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .telegram-link {
+            display: inline-block;
+            background: #0088cc;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: glow 2s infinite;
+        }
+        
+        .telegram-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px #0088cc;
+        }
+        
+        /* 6. Анимации */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes bounce {
+            to { transform: translateY(-20px); }
+        }
+        
+        @keyframes appear {
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* 7. Фоновые частицы */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-30px) translateX(-10px); }
+            75% { transform: translateY(-10px) translateX(20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 8. Фоновые частицы -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Контейнер загрузки -->
+    <div class="loader-container" id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Загружается...</div>
+        <div class="loader-circles">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content" id="mainContent">
+        <h1>✨ Здравствуйте! ✨</h1>
+        <p>Напишите в Telegram бот @mortop</p>
+        <p>Вам будет отправлена инструкция проверки</p>
+        <p>🍀 Удачи вам! 🍀</p>
+        <a href="https://t.me/mortop" target="_blank" class="telegram-link">📱 Написать в Telegram</a>
+    </div>
+
+    <script>
+        // Создание частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 10 + 5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animationDuration = Math.random() * 5 + 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Задержка 5 секунд, потом показываем контент
+        window.onload = function() {
+            createParticles();
+            
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }, 5000); // 5 секунд загрузки
+        };
+    </script>
+</body>
+</html>
